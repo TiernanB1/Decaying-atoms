@@ -3,10 +3,10 @@ import random
 
 
 class Atoms():
-    def __init__(self, atoms, lamda, step):
+    def __init__(self, atoms, probability, step):
         "initialise the array, lamda, and the time step"
         self.atoms = atoms
-        self.lamda = lamda 
+        self.probability = probability 
         self.step = step
 
     def __str__(self):
@@ -16,14 +16,14 @@ class Atoms():
         output = ""
         for row in grid: 
             for point in row:
-                output += f"{point} "
+                output += f"{point} " # prints each atom in the list row by row
             output += "\n"
 
         output += (
             f"\ninitial number of undecayed atoms = {len(self.atoms)}"
             f"\nfinal number of undecayed atoms = {len(self.atoms)- self.decayed}"
             f"\nsimulated half life =  {round(self.time, 2)} minutes" 
-            f"\npredicted half life = {round((np.log(2)/ (self.lamda/self.step)), 2)} minutes"
+            f"\npredicted half life = {round((np.log(2)/ (self.probability/self.step)), 2)} minutes"
         )     
         return output
 
@@ -37,20 +37,18 @@ class Atoms():
 
         while self.decayed < len(self.atoms)//2: #loop until count is half of the total
             self.time += self.step #add 1 to step 
-            for i in range(len(self.atoms)): #loop for all atoms 
+            for i in range(len(self.atoms)): 
                 if self.atoms[i] != 0: #if atom hasnt already decayed
-                    if random.random() < self.lamda: #decide if it should decay
+                    if random.random() < self.probability: #decide if it should decay
                         self.atoms[i] = 0 # update to decayed state
-                        self.decayed += 1 #update how many have decayed
+                        self.decayed += 1 
                        
                     else:
                        pass 
                 else:
                     pass
 
-        
-
-       
+    
 def main():
 
     length = int(input("enter length of side (N)"))
